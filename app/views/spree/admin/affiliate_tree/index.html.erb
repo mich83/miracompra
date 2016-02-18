@@ -1,0 +1,45 @@
+<h1><%=Spree.t(:affiliate_tree)%></h1>
+
+<ol style="margin-left: 20px;">
+  <% @users.each do |user| %>
+      <li>
+        <%=user.display_name %>
+        <% if user.referral.referred_users.count != 0 %>
+            <span onclick="javascript:process_level(this, <%=user.id%>)" class="glyphicon glyphicon-plus"></span>
+            <ol style="padding-left: 15px;" id="user_children_<%=user.id%>"></ol>
+        <% end %>
+      </li>
+  <% end %>
+</ol>
+<input type="hidden" id="apiKey" value="<%=spree_current_user.spree_api_key %>"/>
+
+<script language="JavaScript">
+    function process_level(item, user_id)
+    {
+        if (item.classList.contains('glyphicon-minus'))
+        {
+            item.className = 'glyphicon glyphicon-plus';
+            $("ol#user_children_"+user_id).empty();
+        }
+        else {
+            item.className = 'glyphicon glyphicon-minus';
+            apiKey = $('#apiKey').attr("value");
+            $.ajax({
+                url: '/api/referals/subordinates.json?token=' + apiKey + "&id=" + user_id,
+                dataType: 'json'
+            }).done(function (data) {
+                for (n in data) {
+                    elem = data[n];
+                    parent_elem = $("ol#user_children_" + elem.parent);
+                    content = '<li>' + elem.name;
+                    if (elem.has_children) {
+                        content = content + '<span onclick="javascript:process_level(this,' + elem.id + ')" class="glyphicon glyphicon-plus" ></span>';
+                        content = content + '<ol style="padding-left: 15px;" id="user_children_' + elem.id + '"></ol>';
+                    }
+                    content = content + '</li>';
+                    parent_elem.append(content);
+                }
+            })
+        }
+    }
+</script>

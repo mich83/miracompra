@@ -1,0 +1,17 @@
+<div class="container">
+<%= bootstrap_form_tag url: "/vpos/do_payment",layout: :horizontal, label_col: "col-xs-2", control_col: "col-xs-10", id:'contact-form' do |f| %>
+    <%= f.hidden_field "order_id", value: @order.id %>
+    <%= f.hidden_field "method_id", value: @method_id %>
+    <%= f.text_field "first_name", value: @address.first_name, label: "Nombres", :required => true %>
+    <%= f.text_field "last_name", value: @address.last_name, label: "Apellidos", :required => true %>
+    <%= f.email_field "email", value: @user.email, label: "Correo", :required => true %>
+    <%= f.text_field "address", value: @address.address1+" "+@address.address2, label:"Direccion", :required => true %>
+    <%= f.text_field "zip", value: @address.zipcode, label: "Código postal", :required => true %>
+    <%= f.text_field "city", value: @address.city, label: "Ciudad", :required => true %>
+    <%= f.text_field "state", value: @address.state.name, label:"Provincia", :required => true %>
+    <%= f.hidden_field "country", value: "EC" %>
+    <%= f.phone_field "phone", value: @address.phone, label:"Teléfono", :required => true %>
+    <%= f.primary "Continuar" %>
+<% end %>
+</div>
+

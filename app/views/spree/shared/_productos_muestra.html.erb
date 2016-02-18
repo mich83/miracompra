@@ -1,0 +1,24 @@
+<div class="container products-block">
+  <div class="row">
+    <div class="col-xs-12 block-title small">
+        Productos de alta demanda
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 block-subtitle">
+        cuidadosamente seleccionados en las categorías de Hogar, Moda y Tecnología
+     </div>
+   </div>
+  <div class="row products-show">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="row">
+    <% @products.each do |prod| %>
+        <% url = spree.product_url(prod) %>
+        <%= render :partial =>'spree/products/thumbnail', :locals => {:product => prod, :url => url} %>
+    <% end %>
+      </div>
+    </div>
+  </div>
+
+
+</div>

@@ -1,0 +1,85 @@
+<div class="logos-block">
+  <div class="container">
+
+    <div class="block-title small gray">
+      ...de las mejores marcas
+    </div>
+
+    <div class="inner">
+
+      <div class="item">
+        <div><div><div id="logos1">
+            <img class="active" src="<%=image_path("marcas/avf.png")%>" alt="AVF" />
+            <img src="<%=image_path("marcas/brother.png")%>" alt="Brother" />
+            <img src="<%=image_path("marcas/pintex.png")%>" alt="Pintex" />
+        </div></div></div>
+      </div>
+      <div class="item">
+        <div><div><div id="logos2">
+          <img class="active" src="<%=image_path("marcas/disney.png")%>" alt="Disney" />
+          <img src="<%=image_path("marcas/prima.png")%>" alt="Prima" />
+          <img src="<%=image_path("marcas/qq.png")%>" alt="Q&Q" />
+        </div></div></div>
+      </div>
+      <div class="item">
+        <div><div><div id="logos3">
+          <img class="active" src="<%=image_path("marcas/omax.png")%>" alt="Omax" />
+          <img src="<%=image_path("marcas/duotek.png")%>" alt="Duotek" />
+          <img src="<%=image_path("marcas/tramontina.png")%>" alt="Tramontina" />
+          <img src="<%=image_path("marcas/oster.png")%>" alt="Oster" />
+        </div></div></div>
+      </div>
+      <div class="item">
+        <div><div><div id="logos4">
+          <img class="active" src="<%=image_path("marcas/casio.png")%>" alt="Casio" />
+          <img src="<%=image_path("marcas/kg.png")%>" alt="KG" />
+          <img src="<%=image_path("marcas/mercury.png")%>" alt="Mercury" />
+          <img src="<%=image_path("marcas/niu.png")%>" alt="Niu" />
+        </div></div></div>      </div>
+
+      <div class="clear"></div>
+    </div>
+
+  </div>
+</div>
+
+<script language="JavaScript">
+function cycleImages(){
+
+    var $active = $('#logos1 .active');
+    var $next = ($active.next().length > 0) ? $active.next() : $('#logos1 img:first');
+    $next.css('z-index',2);//move the next image up the pile
+    $active.fadeOut(1500,function(){//fade out the top image
+        $active.css('z-index',1).show().removeClass('active');//reset the z-index and unhide the image
+        $next.css('z-index',3).addClass('active');//make the next image the top one
+    });
+    var $active = $('#logos2 .active');
+    var $next = ($active.next().length > 0) ? $active.next() : $('#logos2 img:first');
+    $next.css('z-index',2);//move the next image up the pile
+    $active.fadeOut(1500,function(){//fade out the top image
+        $active.css('z-index',1).show().removeClass('active');//reset the z-index and unhide the image
+        $next.css('z-index',3).addClass('active');//make the next image the top one
+    });
+    var $active = $('#logos3 .active');
+    var $next = ($active.next().length > 0) ? $active.next() : $('#logos3 img:first');
+    $next.css('z-index',2);//move the next image up the pile
+    $active.fadeOut(1500,function(){//fade out the top image
+        $active.css('z-index',1).show().removeClass('active');//reset the z-index and unhide the image
+        $next.css('z-index',3).addClass('active');//make the next image the top one
+    });
+    var $active = $('#logos4 .active');
+    var $next = ($active.next().length > 0) ? $active.next() : $('#logos4 img:first');
+    $next.css('z-index',2);//move the next image up the pile
+    $active.fadeOut(1500,function(){//fade out the top image
+        $active.css('z-index',1).show().removeClass('active');//reset the z-index and unhide the image
+        $next.css('z-index',3).addClass('active');//make the next image the top one
+    });
+
+}
+
+$(document).ready(function(){
+// run every 7s
+setInterval('cycleImages()', 3000);
+})
+
+</script>

@@ -1,0 +1,32 @@
+<div class="modal fade" id="user-info-dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Usuario</h4>
+      </div>
+      <div class="modal-body">
+        <dl class="dl-horizontal">
+          <dt><%=Spree.t(:full_name) %></dt>
+          <dd id="user-info-full_name">full-name</dd>
+          <dt><%=Spree.t(:phone) %></dt>
+          <dd id="user-info-phone">phone</dd>
+          <dt><%=Spree.t(:email) %></dt>
+          <dd id="user-info-email">email</dd>
+          <dt><%=Spree.t(:city) %></dt>
+          <dd id="user-info-city">city</dd>
+          <dt><%=Spree.t(:user_name) %></dt>
+          <dd id="user-info-code">coder</dd>
+          <dt><%=Spree.t(:referred_by) %></dt>
+          <dd id="user-info-parent">parent</dd>
+          <dt><%=Spree.t(:plan) %></dt>
+          <dd id="user-info-plan">plan</dd>
+        </dl>
+
+
+      </div>
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+

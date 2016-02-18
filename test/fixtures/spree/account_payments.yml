@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  account_id: 
+  document_ref: MyString
+  value: 9.99
+  reason: MyString
+
+two:
+  account_id: 
+  document_ref: MyString
+  value: 9.99
+  reason: MyString

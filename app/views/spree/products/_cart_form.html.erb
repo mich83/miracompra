@@ -1,0 +1,89 @@
+<%= form_for :order, :url => populate_orders_path, :html => {:autocomplete => 'off'} do |f| %>
+  <div class="row" id="inside-product-cart-form" data-hook="inside_product_cart_form" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+    <% if @product.variants_and_option_values(current_currency).any? %>
+      <div id="product-variants" class="col-md-6">
+        <h3 class="product-section-title"><%= Spree.t(:variants) %></h3>
+        <ul class="list-group">
+          <% @product.variants_and_option_values(current_currency).each_with_index do |variant, index| %>
+            <li>
+              <% Rails.logger.debug variant.inspect %>
+              <%= radio_button_tag "variant_id", variant.id, index == 0, 'data-price' => variant.price_in(current_currency).money, 'data-price-with-discount' => price_with_discount(variant, current_currency) , 'data-sku' => variant.sku %>
+              <%= label_tag "variant_id_#{ variant.id }" do %>
+                <span class="variant-description">
+                  <%= variant_options variant %>
+                </span>
+                <% if variant_price variant %>
+                  <span class="price diff"><%= variant_price variant %></span>
+                <% end %>
+                <% unless variant.can_supply? %>
+                  <span class="out-of-stock"><%= Spree.t(:out_of_stock) %></span>
+                <% end %>
+              <% end %>
+            </li>
+          <% end%>
+        </ul>
+      </div>
+    <% else %>
+      <%= hidden_field_tag "variant_id", @product.master.id %>
+    <% end %>
+
+    <% if @product.price_in(current_currency) and !@product.price.nil? %>
+      <% current_price = display_price(@product) %>
+      <% discount = "" %>
+      <% if spree_current_user && !spree_current_user.plan.blank? %>
+            <% Rails.logger.debug "DISCOUNT: #{spree_current_user.inspect} PLAN: #{spree_current_user.plan}" %>
+            <% price_with_discount = price_with_discount(@product, current_currency) %>
+            <% discount = "has-discount" if price_with_discount != current_price %>
+      <% end %>
+      <div data-hook="product_price" class="col-md-5">
+        <div id="product-price">
+          <h6 class="product-section-title"><%= Spree.t(:price) %></h6>
+          <div>
+            <span class="lead price selling <%=discount %>" itemprop="price">
+              <%= display_price(@product) %>
+            </span>
+            <span itemprop="priceCurrency" content="<%= @product.currency %>"></span>
+          </div>
+
+          <% if @product.master.can_supply? %>
+            <link itemprop="availability" href="https://schema.org/InStock" />
+          <% elsif @product.variants.empty? %>
+            <br />
+            <span class="out-of-stock"><%= Spree.t(:out_of_stock) %></span>
+          <% end %>
+        </div>
+        <% if !discount.blank? %>
+            <div id="product-price-discount">
+              <h6 class="product-section-title"><%= Spree.t(:price_with_discount) %></h6>
+              <div>
+            <span class="lead price-with-discount selling" itemprop="price-with-discount">
+             <%= price_with_discount %>
+            </span>
+                <span itemprop="priceCurrency" content="<%= @product.currency %>"></span>
+        </div>
+        <% end %>
+
+        <div class="add-to-cart">
+          <br/>
+          <div class="input-group">
+            <% if @product.is_real? %>
+                <%= number_field_tag :quantity, 1, :class => 'title form-control', :min => 1 %>
+            <% else %>
+                <%= hidden_field_tag :quantity, 1 %>
+            <% end %>
+            <span class="input-group-btn">
+              <%= button_tag :class => 'btn btn-success', :id => 'add-to-cart-button', :type => :submit do %>
+                <%= Spree.t(:add_to_cart) %>
+              <% end %>
+            </span>
+          </div>
+        </div>
+      </div>
+    <% else %>
+      <div id="product-price">
+        <br>
+        <div><span class="price selling" itemprop="price"><%= Spree.t('product_not_available_in_this_currency') %></span></div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

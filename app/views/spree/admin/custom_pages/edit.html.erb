@@ -1,0 +1,23 @@
+<% content_for :page_title do %>
+  <%= Spree.t(:editing_custom_page) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <li>
+    <%= button_link_to Spree.t(:back_to_custom_pages_list), collection_url, icon: 'arrow-left' %>
+  </li>
+<% end %>
+
+<div data-hook="admin_custom_page_edit_form_header">
+  <%= render 'spree/shared/error_messages', target: @custom_page %>
+</div>
+
+<div data-hook="admin_invitation_edit_form">
+  <%= form_for [:admin, @custom_page] do |f| %>
+    <%= render 'form', f: f %>
+
+    <div data-hook="admin_custom_page_edit_form_buttons">
+      <%= render 'spree/admin/shared/edit_resource_links' %>
+    </div>
+  <% end %>
+</div>

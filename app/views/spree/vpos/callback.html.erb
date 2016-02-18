@@ -1,0 +1,23 @@
+<div class="top">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4"><a href="/"><img src="<%=image_path('logo.png')%>"></a></div>
+    </div>
+  </div>
+
+</div>
+
+<%= form_tag '/checkout/update/payment', method: :patch, id: 'payment_form' do %>
+    <%= hidden_field_tag 'order[state_lock_version]', @order.state_lock_version %>
+    <%= hidden_field_tag 'order[payments_attributes][][payment_method_id]', @payment_method %>
+<% end %>
+
+<div style="position: absolute; top: 50%; left: 50%; width: 500px; height: 80px; margin-top: -40px; /* Half the height */ margin-left: -250px;">
+
+<h3 style=""> Espere, por favor. La transacción está procesando.</h3>
+<img style="margin-left: 150px;" src="<%=image_path('wait.gif')%>" width="80px" height="80px"/>
+</div>
+
+<script language="JavaScript">
+    $('#payment_form').submit();
+</script>

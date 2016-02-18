@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  spree_user: 
+  comisiones: 9.99
+  bono: 9.99
+  comercializacion: 9.99
+  c_limite: 9.99
+  esp_recompra: 9.99
+  esp_factura: 9.99
+  acreditado: 9.99
+
+two:
+  spree_user: 
+  comisiones: 9.99
+  bono: 9.99
+  comercializacion: 9.99
+  c_limite: 9.99
+  esp_recompra: 9.99
+  esp_factura: 9.99
+  acreditado: 9.99

@@ -1,0 +1,91 @@
+<h2>Mi organización</h2>
+
+<% rrr = referral_url(@user.referral.code) %>
+
+<div class="row">
+  <label class="control_label col-sm-2" for="referral_url"><%= Spree.t(:referral_url) %></label>
+  <div class="controls col-sm-9">
+    <input id="referral_url" class="form-control" type='text' value='<%= rrr %>' onClick='this.select();' /></div>
+  <button class="btn btn-info col-sm-1" data-toggle="modal" data-target="#inviteDlg">Invitar</button>
+</div>
+<div class="row">
+  <div class="col-md-4">
+    <h3><%=Spree.t(:commissions)%></h3>
+    <dl class="dl-horizontal">
+      <dt style="width: 220px;"><%=link_to Spree.t(:comisiones), "#", onclick: "open_report('/report/Comisiones?Cliente=#{@user.id}&Cliente_type=SpreeUser')"%></dt>
+      <dd><%="$%.2f" % @stats[:comisiones]%></dd>
+      <dt style="width: 220px;"><%=link_to Spree.t(:bono), "#", onclick: "open_report('/report/BonosIntegradores?Patrocinador=#{@user.id}&Patrocinador_type=SpreeUser')" %></dt>
+      <dd><%="$%.2f" % @stats[:bono]%></dd>
+      <dt style="width: 220px;"><%=Spree.t( @stats[:comercializacion] > @stats[:c_limite] ? :income : :possible_income)%></dt>
+      <dd><%="$%.2f" % (@stats[:comisiones]+@stats[:bono])%></dd>
+      <dt style="width: 220px;"><%=Spree.t(:comercializacion)%></dt>
+      <dd><%="$%.2f" % @stats[:comercializacion]%> (<%=@stats[:c_limite] == 999999.00 ? "no aplic. " : "$%.2f" % @stats[:c_limite]%>)</dd>
+    </dl>
+    <h3>Acreditación de Ganancias </h3>
+    <dl class="dl-horizontal">
+      <dt style="width: 220px;"><%=Spree.t(:esp_recompra)%></dt>
+      <dd><%="$%.2f" % @stats[:esp_recompra]%></dd>
+      <dt style="width: 220px;"><%=link_to Spree.t(:esp_factura), "#", onclick: "open_report('/report/Ganancias?Cliente=#{@user.id}&Cliente_type=SpreeUser')"%></dt>
+      <dd><%="$%.2f" % @stats[:esp_factura]%></dd>
+      <dt style="width: 220px;"><%=Spree.t(:acreditado)%></dt>
+      <dd><%="$%.2f" % @stats[:acreditado]%></dd>
+    </dl>
+  </div>
+<div class="col-md-4">
+  <h3><%=Spree.t(:accounts) %></h3>
+  <dl class="dl-horizontal">
+    <% @user.accounts.each do |account| %>
+        <dt><%=link_to Spree.t("#{account.account_type}_account".to_sym), "#", onclick: "open_report('/report/EstadoDeCuenta?Cuenta=#{account.id}&Cuenta_type=SpreeUserAccount');" %></dt>
+        <dd><%="%.2f" % account.balance%> </dd>
+    <% end %>
+  </dl>
+</div>
+</div>
+<fieldset>
+  <h3><%= Spree.t(:referral_information) %></h3>
+  <table class="table">
+    <tr>
+      <th><%= Spree.t(:referred_by) %></th>
+      <td>
+        <% if @user.referred? %>
+            <%= @user.referred_by.display_name %>
+        <% elsif @user.affiliate? %>
+            <%= @user.affiliate.name %>
+        <% else %>
+            <%= Spree.t(:organic) %>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <th><%= Spree.t(:users_referred) %></th>
+      <td>
+        <%= Spree.t(:no_referred_users_yet) if @user.referred_count == 0 %>
+        <ol style="margin-left: 20px;">
+          <% @user.referral.referred_users.each do |user| %>
+              <li data-plan="<%=user.plan_presentation%>"
+                  data-phone="<%=user.phone%>"
+                  data-full_name="<%=user.full_name%>"
+                  data-code="<%=user.referral.code%>"
+                  data-email="<%=user.email%>"
+                  data-city="<%=user.ship_address.nil? ? "" : user.ship_address.city %>"
+                  data-parent="<%=user.referred? ? user.referred_by.display_name : "" %>"
+                  class="user-info"
+                  >
+                    <img src='<%=image_url(user.plan_image)%>' width="24" height="24"/>
+                <% if !user.plan.blank? %>
+                    <%=user.plan_presentation %>
+                <% end %>
+                <a onclick="user_info(this);"><%=user.display_name %></a>
+                <% if user.referral.referred_users.count != 0 %>
+                    <span onclick="javascript:process_level(this, <%=user.id%>)" class="glyphicon glyphicon-plus"></span>
+                    <ol style="padding-left: 15px;" id="user_children_<%=user.id%>"></ol>
+                <% end %>
+              </li>
+          <% end %>
+        </ol>
+      </td>
+  </table>
+</fieldset>
+<%= render partial: "invite_dialog" %>
+<%= render partial: "company_script" %>
+<%= render partial: "user_info_dialog" %>

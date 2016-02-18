@@ -1,0 +1,11 @@
+<body>
+<%= image_tag attachments['logo.png'].url %>
+<table border="0">
+  <tr><td>¡Felicitaciones!</td></tr>
+  <tr><td><%=@new_user.full_name %> es ahora un nuevo usuario registrado en su primera generación.</td></tr>
+  <tr><td>Usuario: <%= @ref.code %></td></tr>
+  <tr><td>Número de teléfono: <%=@new_user.phone %></td></tr>
+  <tr><td>Correo electrónico: <%=@new_user.email %></td></tr>
+</table>
+¡Dale la más cordial bienvenida a nuestro equipo ganador!
+</body>

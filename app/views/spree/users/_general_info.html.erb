@@ -1,0 +1,49 @@
+<div class="row" style="display: table;" xmlns="http://www.w3.org/1999/html">
+  <div class="col-md-11" style="display: table-cell; float: none;">
+    <h1><%= accurate_title %></h1>
+  </div>
+  <div class="col-md-1" style="display: table-cell; float: none;">
+    <%= link_to Spree.t(:edit), spree.edit_account_path, :class=>"btn btn-info" %>
+  </div>
+</div>
+<div class="row">
+  <div class="column">
+        <dl id="user-info" class="dl-horizontal">
+          <dt><%=Spree.t(:user_name) %></dt>
+          <dd><%=@user.referral.code %></dd>
+          <dt><%= Spree.t(:email) %></dt>
+          <dd><%= @user.email %></dd>
+          <dt><%= Spree.t(:full_name) %></dt>
+          <dd><%= @user.full_name %></dd>
+          <dt><%= Spree.t(:birth_date) %></dt>
+          <dd><%= @user.birth_date %></dd>
+          <dt><%= Spree.t(:document) %></dt>
+          <dd><%= @user.document %></dd>
+          <dt><%= Spree.t(:phone) %></dt>
+          <dd><%= @user.phone %></dd>
+          <dt><%= Spree.t(:mobile) %></dt>
+          <dd><%= @user.mobile %></dd>
+          <dt><%= Spree.t(:billing_address) %></dt>
+          <dd><%= @user.bill_address %></dd>
+          <dt><%= Spree.t(:shipping_address) %></dt>
+          <dd><%= @user.ship_address %></dd>
+          <dt><%= Spree.t(:plan) %></dt>
+          <dd><%= @user.plan_presentation %></dd>
+        </dl>
+  </div>
+</div>
+<% if [nil, ""].include?(@user.plan) %>
+   <div class="row">
+     <div class="column">
+       <h1>Compra tu plan!</h1>
+       <p>Escoge un plan para aprovechar los beneficios que te brinda Mira Compra</p>
+       <p><a href="https://s3-us-west-2.amazonaws.com/img.miracompra.com.ec/planes-kit.jpg" >Consulta el cuadro de beneficios</a> si no estás seguro que plan escoger </p>
+     </div>
+   </div>
+<% end %>
+
+  <% @available_plans.each do |plan| %>
+    <div class="row" style="margin-top: 5px; margin-bottom: 5px;">
+      <%= link_to "Comprar #{plan.name}", url_for(plan), class: "btn btn-#{plan.plan_info} col-sm-4" %>
+    </div>
+  <% end %>

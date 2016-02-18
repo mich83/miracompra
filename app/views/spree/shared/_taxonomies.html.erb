@@ -1,0 +1,35 @@
+<% max_level = Spree::Config[:max_level_in_taxons_menu] || 1 %>
+
+<nav class="filter navmenu navmenu-default" role="navigation" >
+<a class="navmenu-brand" href="/products">
+      <img src="<%=image_path('catalogo.png')%>">
+      <h3 style="display: inline; margin-left: 5px;">Categorías</h3></a>
+<% root_taxons = nav_taxons(nil) %>
+    <ul class="nav navmenu-nav">
+      <% if @taxon %>
+          <% root_parent = @taxon.ancestors.count == 0 ? @taxon : @taxon.ancestors[0] %>
+      <% end %>
+      <% root_taxons.each do |taxon| %>
+          <li><h3><a href="<%=taxon[:url]%>"><%=taxon[:name]%></a></h3></li>
+          <% if @taxon && root_parent == taxon[:ref] %>
+                <ul class="nav" style="margin-left: 15px;">
+                  <% taxons = nav_taxons(@taxon.id) %>
+                  <% taxons.each do |t| %>
+                  <li><h5><a href="<%=t[:url]%>"><%=t[:name]%></a></h5></li>
+                  <% end %>
+                </ul>
+          <% elsif !@taxon %>
+              <ul class="nav" style="margin-left: 15px;">
+                <% if taxon[:ref].nil? %>
+                    <% Rails.logger.debug taxon.inspect %>
+                <% else %>
+                    <% taxons = nav_taxons(taxon[:ref].id) %>
+                    <% taxons.each do |t| %>
+                        <li><h5><a href="<%=t[:url]%>"><%=t[:name]%></a></h5></li>
+                    <% end %>
+                <% end %>
+              </ul>
+          <% end %>
+      <% end %>
+    </ul>
+</nav>

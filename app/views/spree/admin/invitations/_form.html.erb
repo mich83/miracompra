@@ -1,0 +1,19 @@
+<%= tinymce_assets %>
+<div data-hook="admin_invitation_form_fields" class="row">
+  <div class="form-group">
+      <%= f.label :name, :class=>'control-label col-sm-1'%>
+      <div class="controls col-sm-11">
+        <%= f.text_field :name, class: 'form-control' %>
+      </div>
+      <%= error_message_on :invitation, :name %>
+    </div>
+  <br>
+  <div class="form-group">
+      <%= f.label :message, :class=>'control-label col-sm-1'%>
+    <div class="controls col-sm-11">
+      <%= f.text_area :message, class: 'tinymce form-control' %>
+      <%= error_message_on :invitation, :message %>
+    </div>
+  </div>
+ </div>
+<%= tinymce %>

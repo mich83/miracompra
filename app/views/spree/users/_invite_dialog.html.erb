@@ -1,0 +1,43 @@
+<div class="modal fade" id="inviteDlg">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Inivitar a un compañero</h4>
+      </div>
+      <div class="modal-body">
+
+        <input type="hidden" id="apiKey" value="<%=spree_current_user.spree_api_key %>"/>
+        <div class="form-inline">
+          <div class="form-group"><%=Spree.t(:email)%>: <input type="email" class="form-control" id="email"/></div>
+          <div class="form-group"><%=Spree.t(:subject) %>: <input type="text" class="form-control" id="subject" style="width:320px;" value="<%=Spree.t(:invitation_to_portal)%>"></div>
+          <div class="btn-group">
+            <button class="btn btn-default" type="button" id="invitation_title"><%=@invitations.count > 0 ? @invitations[0].name : Spree.t(:predefined_invitations)%></button>
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <% @invitations.each do |i| %>
+                  <li><a href="#" onclick="javascript:set_message_text(<%=i.id %>)"><%=i.name %></a></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+        <div class="form-inline" style="margin-top: 10px;">
+          <div class="form-group"><%=Spree.t(:name)%>: <input type="text" class="form-control" id="name"/></div>
+        </div> <br>
+        <div>
+          <textarea class="tinymce form-control" style="margin-top: 15px; height: 200px;" id="message"><%= @invitations.count > 0 ? @invitations[0].message : "" %></textarea>
+          <%= tinymce %>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <p class="bg-danger" id="send_error" style="display: none;">No se puede enviar el correo!</p>
+        <button type="button" class="btn btn-default" data-dismiss="modal" style="height: 50px;">Cerrar</button>
+        <button type="button" class="btn btn-success" onclick="javascript:send_message();" style="height: 50px; width: 180px;">Invitar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id = "externalDialog" style="overflow-y:auto;"></div>

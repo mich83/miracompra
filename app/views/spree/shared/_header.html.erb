@@ -1,0 +1,25 @@
+<div class="top">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4"><a href="/"><img src="<%=image_path('logo.png')%>"></a></div>
+        <div class="col-sm-8">
+          <div class="menu">
+            <a href="/products">
+              <img src="<%=image_path('fav.png')%>">
+              <h3>Tienda virtual</h3>
+            </a>
+            <a href="/catalog">
+              <img src="<%=image_path('catalogo.png')%>">
+              <h3>Catálogos</h3>
+            </a>
+
+            <a href="/account">
+              <img src="<%=image_path('oficina.png')%>">
+              <h3>Mi oficina</h3>
+            </a>
+            <%= render :partial => "spree/shared/login_bar" %>
+          </div></div>
+      </div>
+    </div>
+
+</div>

@@ -1,0 +1,53 @@
+<% content_for :fullscreen do %>
+<% @body_id = 'signup' %>
+<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @user } %>
+
+<%= render :partial => 'spree/shared/masde400' %>
+<%= render :partial => 'spree/shared/beneficios' %>
+<%= render :partial => 'spree/shared/productos_muestra' %>
+
+
+
+<%= render :partial => 'spree/shared/herramientas' %>
+
+
+<div class="form-block">
+<div class="container">
+<div class="row">
+  <div class="hidden-xs col-sm-7">
+    <div class="row">
+      <div class="hidden-xs hidden-sm text">
+    SOMOS LOS QUE<br>
+    DECIDIMOS CUMPLIR<br>
+    NUESTROS SUEÑOS
+      </div>
+    </div>
+  </div>
+<% if spree_current_user.nil? %>
+<a id = "sign_up"></a>
+<div class="col-sm-5" >
+  <div class="panel panel-default">
+    <div id="new-customer" class="panel-body" data-hook="login">
+      <div class="block-title small">Únete a nosotros</div>
+      <%= form_for resource, :as => :spree_user, :url => spree.registration_path(@user) do |f| %>
+          <div data-hook="signup_inside_form">
+            <%= render :partial => 'spree/shared/user_form', :locals => { :f => f } %>
+            <p><%= f.submit Spree.t(:register), :class => 'btn btn-lg btn-success btn-block' %></p>
+          </div>
+      <% end %>
+      <div class="text-center">
+        <%= Spree.t(:or) %>
+        <%= link_to Spree.t(:login_as_existing), spree.login_path %>
+      </div>
+      <div data-hook="login_extras"></div>
+    </div>
+  </div>
+</div>
+<% end %>
+</div>
+</div>
+</div>
+
+
+
+<% end %>

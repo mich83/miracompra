@@ -1,0 +1,124 @@
+<script language="JavaScript">
+    function set_message_text(id)
+    {
+        apiKey = $('#apiKey').attr('value');
+        $.ajax({
+            url: '/api/invitations/'+id+'.json?token='+apiKey,
+            dataType: 'json'
+        }).done(function(data){
+            tinyMCE.activeEditor.setContent(data.message);
+            $("button#invitation_title").html(data.name);
+        })
+    }
+
+    function check_input(id) {
+        if ($(id)[0].value == "" || $(id)[0].value == undefined) {
+            $(id).parent().addClass("has-error");
+            return false;
+        }
+        else {
+            $(id).parent().removeClass("has-error");
+            return true;
+        }
+    }
+
+    function send_message()
+    {
+        if (check_input("#email") && check_input("#subject")) {
+            email = $("#email")[0].value;
+            subject = $("#subject")[0].value;
+            name = $('#name')[0].value;
+            message = tinyMCE.activeEditor.getContent();
+            apiKey = $('#apiKey').attr('value');
+            $.post("/api/send_invite", {token: apiKey, email: email, subject: subject, name: name, msg: message}, null, "json"
+            ).done(
+                    function(data)
+                    {
+                        $('#inviteDlg').modal('toggle');
+                    }
+            ).fail(
+                    function(data){
+                        $('#send_error').show();
+                        ;});
+        }
+    }
+
+    function process_level(item, user_id)
+    {
+        if (item.classList.contains('glyphicon-minus'))
+        {
+            item.className = 'glyphicon glyphicon-plus';
+            $("ol#user_children_"+user_id).empty();
+        }
+        else {
+            item.className = 'glyphicon glyphicon-minus';
+            apiKey = $('#apiKey').attr("value");
+            $.ajax({
+                url: '/api/referals/subordinates.json?token=' + apiKey + "&id=" + user_id,
+                dataType: 'json'
+            }).done(function (data) {
+                for (n in data) {
+                    elem = data[n];
+                    parent_elem = $("ol#user_children_" + elem.parent_id);
+                    content = '<li class="user-info" data-phone="'+elem.phone+'" data-plan="'+elem.plan_presentation+'" data-full_name="'+elem.full_name+'" data-city="'+elem.city+'" data-code="'+elem.code+'" data-parent="'+elem.parent+'" data-email="'+elem.email+'">';
+                    content = content+ "<img src='"+ elem.plan_image + "' width='24' height='24'/>";
+                    if (elem.plan != "")
+                       content = content + elem.plan_presentation+' ';
+                    content = content+ '<a onclick="user_info(this);"> '+elem.name+'</a>';
+                    if (elem.has_children) {
+                        content = content + '<span onclick="javascript:process_level(this,' + elem.id + ')" class="glyphicon glyphicon-plus" ></span>';
+                        content = content + '<ol style="padding-left: 15px;" id="user_children_' + elem.id + '"></ol>';
+                    }
+                    content = content + '</li>';
+                    parent_elem.append(content);
+                }
+            })
+        }
+    }
+
+    $("#inviteDlg").on('show.bs.modal', function (e){
+        $('#user_name').val('');
+        $('#email').val('');
+        $('#subject').val('<%=Spree.t(:invitation_to_portal)%>');
+        $('#message').val('');
+        $('#send_error').hide();
+    })
+
+    function externalDialog() {
+        return $('div#externalDialog')
+                .dialog({
+                    resizable: false,
+                    autoOpen: false,
+                    height: 600,
+                    width: 800,
+                    show: 'fold',
+                    modal: true
+                });
+    }
+
+    function open_report(url) {
+        $modalDialog = externalDialog();
+        $modalDialog.load(url);
+        $modalDialog.dialog("open");
+        $('div#externalDialog').css({"overflow-y": "auto", "background-color": fff})
+    };
+
+    function user_info(elem) {
+        assignData(elem, 'full_name');
+        assignData(elem, 'phone');
+        assignData(elem, 'plan');
+        assignData(elem, 'code');
+        assignData(elem, 'parent');
+        assignData(elem, 'email');
+        assignData(elem, 'city');
+        $("#user-info-dialog").modal({
+            show:true
+        });
+    }
+
+    function assignData(elem, field) {
+        $('dd#user-info-'+field).html(elem.parentElement.getAttribute('data-'+field));
+    }
+
+
+</script>

@@ -1,0 +1,5 @@
+<% if spree_current_user %>
+    <%= link_to "<img src=#{image_path('entrar.png')}><h3 style='color:#ec2028;'>Salir</h3>".html_safe, spree.logout_path, style: "margin: 0;" %>
+<% else %>
+    <%= link_to "<img src=#{image_path('entrar.png')}><h3 style='color:#ec2028;'>Entrar</h3>".html_safe, spree.login_path, style: "margin: 0;" %>
+<% end %>

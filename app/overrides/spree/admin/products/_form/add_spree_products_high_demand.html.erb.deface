@@ -1,0 +1,5 @@
+<!-- insert_bottom "[data-hook='admin_product_form_additional_fields']" -->
+    <%= f.field_container :high_demand do %>
+      <%= f.label :high_demand, Spree.t(:high_demand) %>
+      <%= f.check_box :high_demand, class: 'form-control' %>
+    <% end %>

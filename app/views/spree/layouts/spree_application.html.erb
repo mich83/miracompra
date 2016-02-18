@@ -1,0 +1,42 @@
+<!doctype html>
+<!--[if lt IE 7 ]> <html class="ie ie6" lang="<%= I18n.locale %>"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie ie7" lang="<%= I18n.locale %>"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie ie8" lang="<%= I18n.locale %>"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie ie9" lang="<%= I18n.locale %>"> <![endif]-->
+<!--[if gt IE 9]><!--><html lang="<%= I18n.locale %>"><!--<![endif]-->
+  <head data-hook="inside_head">
+    <%= render partial: 'spree/shared/head' %>
+  </head>
+  <body class="<%= body_class %>" id="<%= @body_id || 'default' %>" data-hook="body">
+    <div class="page-wrapper">
+    <%= render partial: 'spree/shared/google_analytics.js' %>
+    <%= render partial: 'spree/shared/header' %>
+    <%= flash_messages %>
+    <%= yield :fullscreen %>
+    <% nav_bar = navbar_data(controller_name, action_name) %>
+    <% if !nav_bar.nil? %>
+          <%= render partial: 'spree/shared/inner_navigation', :locals => nav_bar %>
+    <% end %>
+    <% mainblock = yield %>
+    <% if !mainblock.blank? %>
+    <div class="container">
+      <div class="row" style="padding-top: 10px; padding-bottom: 25px;"data-hook>
+        <% if !@product %>
+            <%= breadcrumbs(@taxon) %>
+        <% end %>
+
+        <%= render partial: 'spree/shared/sidebar' if content_for? :sidebar %>
+
+        <div id="content" class="<%= !content_for?(:sidebar) ? "col-sm-12" : "col-sm-8 col-md-9" %>" data-hook>
+          <%= yield %>
+        </div>
+
+        <%= yield :templates %>
+      </div>
+    </div>
+    <% end %>
+
+    <div class="page-buffer"></div></div>
+    <%= render :partial => 'spree/shared/footer' %>
+  </body>
+</html>

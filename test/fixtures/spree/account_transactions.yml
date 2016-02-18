@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  spree_account_id: 1
+  value: 9.99
+  reason: MyString
+
+two:
+  spree_account_id: 1
+  value: 9.99
+  reason: MyString

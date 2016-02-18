@@ -1,0 +1,38 @@
+<% content_for :page_title do %>
+  <%= Spree.t(:listing_invitations) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <li>
+    <%= button_link_to Spree.t(:new_invitation), new_object_url, icon: 'plus', id: 'admin_new_invitation_link' %>
+  </li>
+<% end %>
+
+<table class="index" id="listing_invitations" width="300px" data-hook>
+  <colgroup>
+    <col style="width: 85%">
+    <col style="width: 15%">
+  </colgroup>
+  <thead>
+    <tr data-hook="admin_invitations_index_headers">
+      <th><%= t(:name, scope: 'activerecord.attributes.spree/invitation') %></th>
+      <th data-hook="admin_invitations_index_header_actions" class="actions"></th>
+      <th class="actions"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @invitations.each do |invitation| %>
+      <tr id="<%= spree_dom_id invitation %>" data-hook="admin_invitations_index_rows" class="<%= cycle('odd', 'even')%>">
+        <td><%= link_to invitation.name, edit_object_url(invitation) %></td>
+        <td data-hook="admin_invitations_index_row_actions" class="actions">
+          <%= link_to_edit invitation, no_text: true %>
+        </td>
+        <td class="actions">
+          <%= link_to_delete invitation, no_text: true %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @invitations %>

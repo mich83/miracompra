@@ -1,0 +1,5 @@
+<!-- insert_bottom "[data-hook='admin_product_form_additional_fields']" -->
+    <%= f.field_container :disabled do %>
+      <%= f.label :disabled, Spree.t(:disabled) %>
+      <%= f.check_box :disabled, class: 'form-control' %>
+    <% end %>

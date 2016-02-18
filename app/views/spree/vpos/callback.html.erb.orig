@@ -1,0 +1,21 @@
+<div class="top">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4"><a href="/"><img src="<%=image_path('logo.png')%>"></a></div>
+    </div>
+  </div>
+
+</div>
+
+<%= form_tag '/checkout/update/payment', method: :patch, id: 'payment_form' do %>
+<% end %>
+
+<div style="position: absolute; top: 50%; left: 50%; width: 500px; height: 80px; margin-top: -40px; /* Half the height */ margin-left: -250px;">
+
+<h3 style=""> Espere, por favor. La transacción está procesando.</h3>
+<img style="margin-left: 150px;" src="<%=image_path('wait.gif')%>" width="80px" height="80px"/>
+</div>
+
+<script language="JavaScript">
+    $('#payment_fform').submit();
+</script>

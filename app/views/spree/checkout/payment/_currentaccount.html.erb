@@ -1,0 +1,4 @@
+<fieldset>
+
+  <%= label_tag "Saldo:  #{'%.2f' % spree_current_user.balance(payment_method.preferred_account_type.to_sym)} USD" %>
+</fieldset>

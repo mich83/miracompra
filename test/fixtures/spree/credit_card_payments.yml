@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  number: MyString
+  value: 1
+  spree_order_id_id: 
+
+two:
+  number: MyString
+  value: 1
+  spree_order_id_id: 

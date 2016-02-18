@@ -1,0 +1,5 @@
+<!-- insert_bottom "[data-hook='admin_product_form_additional_fields']" -->
+    <%= f.field_container :plan_info, class: ['form-group'] do %>
+      <%= f.label :plan_info, Spree.t(:plan_info) %>
+      <%= f.text_field :plan_info, class: 'form-control' %>
+    <% end %>

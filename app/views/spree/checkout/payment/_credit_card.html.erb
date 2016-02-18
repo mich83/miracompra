@@ -1,0 +1,37 @@
+
+
+<div class="modal fade" id="paymentDlg">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Datos de la tarjeta de crédito</h4>
+      </div>
+      <div class="modal-body" style="width:660px; height:510px; overflow: hidden;">
+          <iframe style="border:0px;" id="external_payment_form" width="640px" height="520px" src="/vpos/payment/<%=@order.id%>/<%=payment_method.id%>"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id = "externalDialog" style="overflow-y:auto;"></div>
+
+<script>
+
+    function onSubmitClick(e) {
+        method = $('input:radio[name="order[payments_attributes][][payment_method_id]"]:checked').val();
+        if (method != "<%=payment_method.id%>")
+        {
+            return;
+        }
+        e.stopPropagation();
+        e.preventDefault();
+        $("#paymentDlg").modal('show');
+        $("#external_payment_form").contents().find("form[name=frmSolicitudPago]").post();
+    }
+    function replaceButton() {
+        $('input[type="submit"]').click(onSubmitClick);
+    }
+
+    $().ready(replaceButton);
+</script>

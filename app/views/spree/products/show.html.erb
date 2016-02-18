@@ -1,0 +1,52 @@
+<% @body_id = 'product-details' %>
+<% render :partial => 'spree/shared/inner_navigation', :locals => {:links => @links,  :shopping_cart=>true} %>
+
+  <div data-hook="product_show" itemscope itemtype="https://schema.org/Product">
+    <div class="col-md-4" data-hook="product_left_part">
+      <div data-hook="product_left_part_wrap">
+        <div id="product-images" data-hook="product_images">
+          <div id="main-image" class="panel panel-default" data-hook>
+            <div class="panel-body text-center">
+              <%= render :partial => 'image' %>
+            </div>
+          </div>
+          <div id="thumbnails" data-hook>
+            <%= render :partial => 'thumbnails' %>
+          </div>
+        </div>
+
+        <div data-hook="product_properties">
+          <%= render :partial => 'properties' %>
+        </div>
+
+        <div data-hook="promotions">
+          <%= render :partial => 'promotions' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8" data-hook="product_right_part">
+      <div data-hook="product_right_part_wrap">
+        <div style="margin-left: -30px"><%= breadcrumbs(@product.taxons.first) %></div>
+        <div id="product-description" data-hook="product_description">
+          <h1 class="product-title" itemprop="name"><%= @product.name %></h1>
+          <div class="product-code" id="product-code">
+            <%= @product.variants.first.nil? ? @product.sku : @product.variants.first.sku %>
+          </div>
+          <div class="well item-description" itemprop="description" data-hook="description">
+            <%= product_description(@product) rescue Spree.t(:product_has_no_description) %>
+          </div>
+
+          <%= render :partial => 'spree/shared/social' %>
+          <div id="cart-form" data-hook="cart_form">
+            <%= render :partial => 'cart_form' %>
+          </div>
+        </div>
+
+        <%= render :partial => 'taxons' %>
+      </div>
+    </div>
+  </div>
+
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-55650d396d1f9be7" async="async"></script>
+

@@ -1,0 +1,10 @@
+.dl-horizontal dt { text-align: left; }
+.btn-margin-left {
+    margin-left: 2px;
+}
+.btn-margin-right {
+    margin-right: 2px;
+}
+.user-info {
+    line-height: 2;
+}

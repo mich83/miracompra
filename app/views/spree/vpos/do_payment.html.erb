@@ -1,0 +1,11 @@
+<form id="payment_form" name="frmSolicitudPago" method="post" action="https://vpayment.verifika.com/VPOS/MM/transactionStart20.do">
+  <input type="hidden" name="IDACQUIRER" value="<%=@req['id_ack']%>"/>
+  <input type="hidden" name="IDCOMMERCE" value="<%=@req['id_comm']%>"/>
+  <input type="hidden" name="XMLREQ" value="<%=@req['xml']%>"/>
+  <input type="hidden" name="DIGITALSIGN" value="<%=@req['signature']%>"/>
+  <input type="hidden" name="SESSIONKEY" value="<%=@req['key']%>"/>
+</form>
+
+<script language="JavaScript">
+  $('#payment_form').submit();
+</script>

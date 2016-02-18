@@ -1,0 +1,111 @@
+
+  <div class="form-group">
+    <%= f.label Spree.t(:email), :class=>'control-label col-sm-4' %>
+    <div class="controls col-sm-8">
+        <%= f.email_field :email, :class => 'form-control', :placeholder => Spree.t(:email) %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label Spree.t(:full_name), :class=>'control-label col-sm-4' %>
+    <div class="controls col-sm-8">
+        <%= f.text_field :full_name, :class => 'form-control', :placeholder => Spree.t(:full_name) %>
+    </div>
+  </div>
+  <hr />
+  <div class="form-group">
+    <%= f.label Spree.t(:password), :class=>'control-label col-sm-4' %>
+    <div class="controls col-sm-8">
+        <%= f.password_field :password, :class => 'form-control', :placeholder => Spree.t(:password) %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label Spree.t(:confirm_password), :class=>'control-label col-sm-4' %>
+    <div class="controls col-sm-8">
+        <%= f.password_field :password_confirmation, :class => 'form-control', :placeholder => Spree.t(:confirm_password) %>
+    </div>
+  </div>
+  <hr />
+
+  <div class="form-group">
+    <%= f.label Spree.t(:birth_date), :class=>'control-label col-sm-4' %>
+    <div class="controls col-sm-8">
+      <div class='input-group date' id='datetimepicker3'>
+          <%= f.date_field :birth_date, :class => 'form-control', :placeholder => Spree.t(:birth_date) %>
+      <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+    </div>
+  </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label Spree.t(:document), :class=>'control-label col-sm-4' %>
+    <div class="controls col-sm-8">
+      <%= f.text_field :document, :class => 'form-control', :placeholder => Spree.t(:document) %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label Spree.t(:phone), :class=>'control-label col-sm-4' %>
+    <div class="controls col-sm-8">
+      <%= f.text_field :phone, :class => 'form-control', :placeholder => Spree.t(:phone) %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label Spree.t(:mobile), :class=>'control-label col-sm-4' %>
+    <div class="controls col-sm-8">
+      <%= f.text_field :mobile, :class => 'form-control', :placeholder => Spree.t(:mobile) %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6" data-hook="billing_fieldset_wrapper">
+      <div class="panel panel-default" id="billing" data-hook>
+        <%= f.fields_for :bill_address do |bill_form| %>
+            <div class="panel-heading">
+              <h3 class="panel-title"><%= Spree.t(:billing_address) %></h3>
+            </div>
+            <div class="panel-body" style="margin: 10px;">
+              <%= render :partial => 'spree/address/form', :locals => { :form => bill_form, :address_type => 'billing', :address => @user.bill_address } %>
+            </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="col-sm-6" data-hook="shipping_fieldset_wrapper">
+      <div class="panel panel-default" id="shipping" data-hook>
+        <%= f.fields_for :ship_address do |ship_form| %>
+            <div class="panel-heading">
+              <h3 class="panel-title"><%= Spree.t(:shipping_address) %></h3>
+            </div>
+            <div id="ship-panel-body" class="panel-body" <%=@user.bill_and_ship_address_equal? ? 'style="display:none; margin:10px;"'.html_safe : 'style="margin:10px;"'.html_safe %>>
+              <%= render :partial => 'spree/address/form', :locals => { :form => ship_form, :address_type => 'shipping', :address => @user.ship_address } %>
+            </div>
+            <p class="field checkbox" data-hook="use_billing" style="margin: 10px;">
+              <%= label_tag :order_use_billing do %>
+                  <%= check_box_tag 'user[use_billing]', '1', @user.bill_and_ship_address_equal?, onclick: "shipping_panel_change_visibility();", autocomplete: 'off' %>
+                  <%= Spree.t(:use_billing_address) %>
+              <% end %>
+            </p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+
+<div data-hook="signup_below_password_fields"></div>
+
+  <script type="text/javascript">
+      $(function () {
+          $('#datetimepicker3').datetimepicker({
+              format: 'LT'
+          });
+      });
+
+      function shipping_panel_change_visibility() {
+          panel = $('#ship-panel-body')
+          if ($("input[name='user[use_billing]']").is(':checked'))
+            panel.css('display', 'none')
+          else
+            panel.css('display', 'block')
+      }
+  </script>

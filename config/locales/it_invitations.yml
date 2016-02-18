@@ -1,0 +1,15 @@
+it:
+  spree:
+    admin:
+      tab:
+        invitations: "Invitations"
+    new_invitation: "Nuovo Invitation"
+    listing_invitations: "Lista Invitations"
+    editing_invitation: "Modifica Invitation"
+    back_to_invitations_list: "Torna alla lista Invitations"
+  activerecord:
+    attributes:
+      spree/invitation:
+        name: Name
+        message: Message
+        user_id: User
